@@ -1,23 +1,27 @@
 type CardState = 'none' | 'green' | 'red';
-type gameState = 'waiting';
+type PlayerState = 'green' | 'red';
+type GameState = 'waiting' | 'starting';
 
 
 export interface Card {
-  state: CardState; 
+  state: CardState;
 }
 
 export interface Player {
   id: string;
   name: string;
+  playerState: PlayerState
   hand: Card[];
 }
 
 export interface Game {
-    id: string;
-    hownerId: string;
+  id: string;
+  hownerId: string;
   players: Player[];
   deck: Card[];
   round: number;
-  state: gameState; 
+  state: GameState;
   userTurnId: string;
+  numOfRedPlayers: number;
+  numOfRedCards: number;
 }
