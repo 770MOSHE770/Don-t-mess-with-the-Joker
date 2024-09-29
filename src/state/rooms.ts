@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { Game } from '../types/game/gameTypes';
+import { Game, Player } from '../types/game/gameTypes';
 
 const rooms: Record<string, Game> = {};
 
@@ -13,17 +13,40 @@ function generateUniqueRoomId(): string {
     return roomId;
 }
 
-export function createNewRoom(roomName: string, hownerId: string): Game {
+export function createNewRoom(username: string, hownerId: string): string {
     const id = generateUniqueRoomId()
+
+    const player: Player = {
+        id: hownerId,
+         name: username,
+        hand: []
+    }
+
     const room: Game = {
         id,
-        roomName,
         hownerId,
-        players: [],
+        players: [player],
         deck: [],
         round: 0,
-        state: "waiting"
+        state: "waiting",
+        userTurnId: ""
     }
     rooms[id] = room
-    return room;
+    return room.id;
+}
+
+export function joinToRoom(username: string, userId: string, roomId: string): string {
+    const room = rooms[roomId]
+    if (!room) {
+        throw ("No existing room")
+    }
+
+    const player: Player = {
+        id: userId,
+        name: username,
+        hand: []
+    }
+
+    room.players.push(player)
+    return room.id;
 }
