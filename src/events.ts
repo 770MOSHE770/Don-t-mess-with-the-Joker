@@ -6,8 +6,8 @@ export const setupSocket = (io: SocketIOServer) => {
 
     socket.on('message', (msg) => {
       console.log('Message received:', msg);
-      io.emit('message', '@@@@'); // Broadcast the message to all connected clients
-    });
+      io.emit('message', msg)
+     });
 
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);
